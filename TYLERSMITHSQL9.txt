@@ -1,0 +1,114 @@
+1. SELECT e.student_id, last_name, first_name, employer
+FROM enrollment e JOIN student s
+ON e.student_id = s.student_id
+HAVING COUNT(*) =
+(SELECT MAX(x.maxe)
+FROM
+(SELECT COUNT(*) AS maxe, student_id
+FROM enrollment
+GROUP BY student_id)x)
+GROUP BY e.student_id, last_name, first_name, employer
+ORDER BY last_name;
+
+2. SELECT i.zip, i.first_name, i.last_name, i.phone
+FROM instructor i JOIN section s
+ON i.instructor_id = s.instructor_id
+JOIN enrollment e
+ON s.section_id = e.section_id
+JOIN student st
+ON e.student_id = st.student_id
+WHERE st.zip = i.zip
+ORDER BY i.first_name;
+
+3. SELECT first_name, last_name, z.city, 'Student' AS ROLE
+FROM student s JOIN zipcode z
+ON s.zip = z.zip
+WHERE s.zip = 10025
+UNION 
+SELECT first_name, last_name, z.city, 'Instructor'AS ROLE
+FROM instructor i JOIN zipcode z
+ON i.zip = z.zip
+WHERE i.zip = 10025
+ORDER BY ROLE, last_name;
+
+4. SELECT tbl1.location, tbl1.Num_Sections AS SECTIONS, tbl2.Num_Students AS STUDENTS
+FROM
+(SELECT location, COUNT(*) NUM_Sections
+FROM section s 
+GROUP BY location)tbl1
+JOIN
+(SELECT COUNT(*) AS Num_Students, location 
+FROM Enrollment e JOIN section s
+ON e.section_id = s.section_id
+GROUP BY s.location) tbl2
+ ON tbl1.location = tbl2.location
+ ORDER BY tbl1.location;
+
+5. SELECT grade_type_code, numeric_grade AS GRADE
+FROM Grade
+WHERE student_id = 112 AND section_id = 95
+UNION ALL
+(SELECT 'Average for student 112' AS Grade_Type_Code ,ROUND(AVG(numeric_grade), 2) AS GRADE
+FROM grade
+WHERE student_id = 112 AND section_id = 95)
+ORDER BY grade_type_code DESC;
+
+6. SELECT i.first_name, i.last_name, NVL(tbl1.sections, '0') AS SECTIONS
+FROM instructor i 
+FULL OUTER JOIN
+(SELECT first_name, last_name, TO_CHAR(COUNT(*)) AS Sections
+FROM section s JOIN instructor i
+ON s.instructor_id = i.instructor_id
+GROUP BY first_name, last_name) tbl1
+ON i.first_name = tbl1.first_name
+ORDER BY i.last_name;
+
+7. SELECT c.course_no, c.description
+FROM course c FULL OUTER JOIN
+(SELECT COUNT(*) AS yz, tbl1.cou AS xy
+FROM
+(SELECT COUNT(*) AS gtcount, c.course_no AS cou, g.grade_type_code
+FROM course c JOIN section s
+ON c.course_no = s.course_no
+JOIN enrollment e
+ON s.section_id = e.section_id
+JOIN grade g
+ON e.student_id = g.student_id
+AND e.section_id = g.section_id
+GROUP BY g.grade_type_code, c.course_no
+ORDER BY c.course_no)tbl1
+GROUP BY tbl1.cou) tbl2
+ON c.course_no = tbl2.xy
+WHERE tbl2.yz = 6
+ORDER BY c.course_no;
+
+8. SELECT z.zip, city, NVL(tbl1.students, 0) AS STUDENTS
+FROM zipcode z FULL JOIN
+(SELECT zip, COUNT(*) AS students
+FROM student
+WHERE student_id IN
+(SELECT DISTINCT student_id
+FROM enrollment)
+GROUP BY zip) tbl1
+ON z.zip = tbl1.zip
+WHERE city = 'Stamford';
+
+9. SELECT c.course_no, description, NVL(tbl1.en, 0) AS ENROLLMENTS
+FROM course c FULL JOIN
+(SELECT course_no, COUNT(*) AS EN
+FROM section s JOIN enrollment e
+ON s.section_id = e.section_id
+GROUP BY course_no) tbl1
+ON c.course_no = tbl1.course_no
+WHERE description LIKE '%Programming%'
+ORDER BY ENROLLMENTS DESC;
+
+10. SELECT s.student_id, first_name, last_name, NVL(tbl1.en, 0) AS ENROLLMENTS 
+FROM student s FULL JOIN
+(Select student_id, COUNT(*) AS EN
+FROM enrollment
+GROUP BY student_id)tbl1
+ON s.student_id = tbl1.student_id
+WHERE phone LIKE '617%'
+ORDER BY last_name;
+

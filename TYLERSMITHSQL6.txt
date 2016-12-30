@@ -1,0 +1,128 @@
+1. Select student_id
+FROM enrollment e JOIN section s
+ON e.section_id = s.section_id
+WHERE course_no BETWEEN 100 AND 199
+Having COUNT(*) =
+(SELECT MAX(numclasses)
+FROM
+(SELECT COUNT(*) AS numclasses
+FROM enrollment e JOIN section s
+ON e.section_id = s.section_id
+WHERE course_no BETWEEN 100 AND 199
+GROUP BY student_id))
+GROUP BY student_id;
+
+2. Select s.student_id, last_name, first_name
+FROM student s JOIN enrollment e
+ON s.student_id = e.student_id
+JOIN grade g
+ON e.student_id = g.student_id 
+JOIN section s
+ON e.section_id = s.section_id
+AND e.section_id = g.section_id
+WHERE grade_type_code = 'FI' and g.section_id = 100 and s.course_no = 230 and g.numeric_grade =
+(SELECT MAX(numeric_grade)
+FROM grade g JOIN grade_type_weight gtw
+ON g.section_id = gtw.section_id
+AND g.grade_type_code = gtw.grade_type_code
+JOIN section s
+ON gtw.section_id = s.section_id
+WHERE g.grade_type_code = 'FI' and g.section_id = 100 and course_no = 230);
+
+3. SELECT salutation, first_name, last_name, zip
+FROM instructor i LEFT JOIN section s
+ON i.instructor_id = s.instructor_id
+WHERE s.instructor_id IS NULL;
+
+4. SELECT last_name, numeric_grade
+FROM student s JOIN enrollment e
+ON s.student_id = e.student_id
+JOIN grade g
+ON e.student_id = g.student_id
+AND e.section_id = g.section_id
+WHERE grade_type_code = 'FI' and g.section_id = 90 and g.numeric_grade >
+(SELECT AVG(numeric_grade)
+FROM grade
+WHERE grade_type_code = 'FI' and section_id = 90)
+ORDER BY last_name;
+
+5. SELECT c.course_no, c.description
+FROM course c JOIN section s
+ON c.course_no = s.course_no
+JOIN enrollment e
+ON s.section_id = e.section_id
+HAVING COUNT(*) =
+(SELECT MIN(NEWCOUNT)
+FROM
+(SELECT section_id, COUNT(*) AS NEWCOUNT
+FROM enrollment
+GROUP BY section_id))
+GROUP BY c.course_no, c.description
+ORDER BY c.course_no;
+
+6. SELECT c.course_no, c.description
+FROM section s JOIN course c
+ON s.course_no = c.course_no
+WHERE TO_CHAR(start_date_time, 'DD Mon YY HH:MIAM') LIKE '%10:30AM%'
+Order By Course_no;
+
+7. SELECT s.student_id, last_name
+FROM student s JOIN enrollment e
+ON s.student_id = e.student_id
+JOIN grade g
+ON e.student_id = g.student_id 
+AND e.section_id = g.section_id
+WHERE grade_type_code = 'QZ' and g.section_id = 120 and g.grade_code_occurrence = 3 and g.numeric_grade <
+(SELECT AVG(numeric_grade)
+FROM grade
+WHERE grade_type_code = 'QZ' and section_id = 120 and grade_code_occurrence = 3);
+
+8. SELECT first_name, last_name, phone
+FROM student
+WHERE student_id
+IN
+(SELECT student_id
+FROM enrollment e JOIN section s
+ON e.section_id = s.section_id
+JOIN course c
+ON s.course_no = c.course_no
+WHERE description = 'Project Management')
+AND student_id IN
+(SELECT student_id
+FROM enrollment e JOIN section s
+ON e.section_id = s.section_id
+JOIN course c
+ON s.course_no = c.course_no
+WHERE description = 'Systems Analysis');
+
+9. SELECT first_name, last_name, c.course_no, c.description
+FROM instructor i JOIN section s
+ON i.instructor_id = s.instructor_id
+JOIN course c
+ON s.course_no = c.course_no
+WHERE description LIKE '%Java%' AND i.instructor_id IN
+(SELECT instructor_ID 
+FROM section s JOIN course c
+ON s.course_no = c.course_no
+WHERE description LIKE '%Java%'
+GROUP BY instructor_ID
+HAVING COUNT(*) = 
+(SELECT MAX(NumCoursesTaught)
+FROM
+(SELECT instructor_ID, COUNT(*) NumCoursesTaught
+FROM section s JOIN course c
+ON s.course_no = c.course_no
+WHERE description LIKE '%Java%'
+GROUP BY instructor_ID)))
+ORDER BY c.description;
+
+10. SELECT s.student_id, last_name
+FROM student s JOIN enrollment e
+ON s.student_id = e.student_id
+JOIN grade g
+ON e.student_id = g.student_id 
+AND e.section_id = g.section_id
+WHERE grade_type_code = 'FI' and g.section_id = 130 and g.numeric_grade >
+(SELECT AVG(numeric_grade)
+FROM grade
+WHERE grade_type_code = 'FI' and section_id = 130);

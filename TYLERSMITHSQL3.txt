@@ -1,0 +1,43 @@
+1. SELECT first_name, last_name, phone
+FROM student
+WHERE registration_date LIKE '13-FEB-07%'
+Order by last_name, first_name;
+
+2. SELECT course_no, section_id, start_date_time
+FROM section
+WHERE location = 'L509'
+Order by start_date_time;
+
+3. SELECT course_no, section_id, start_date_time, instructor_id, capacity
+FROM section
+WHERE start_date_time LIKE '%JUL-07%'
+Order BY start_date_time, course_no;
+
+4. SELECT student_id, section_id, final_grade
+FROM enrollment
+WHERE final_grade IS NOT NULL AND enroll_date LIKE '%JAN-07%';
+
+5. SELECT TO_CHAR(To_Date('JAN 11 2016', 'Mon DD YY')+ 109, 'DD-MON-YY') AS "SEMESTER_END_DATE"
+FROM Dual;
+
+6. SELECT course_no, location
+FROM section
+WHERE location LIKE 'L%' AND (Location LIKE '%0' OR Location LIKE '%2' OR location LIKE '%4' OR Location Like '%6');
+
+7. SELECT last_name, first_name
+FROM student
+WHERE registration_date - created_date = 3 AND zip = 11368;
+
+8. SELECT first_name, last_name, TO_CHAR(((sysdate - created_date)/365), '9.99') as "Years"
+FROM student
+WHERE phone Like '212%'
+Order BY "Years" DESC;
+
+9. SELECT DISTINCT TO_CHAR(start_date_time, 'HH:MI') AS "START"
+FROM section
+ORDER BY "START";
+
+10. SELECT student_id, section_id, TO_CHAR(enroll_date, 'HH:MIAM') AS "ENROLLTIME"
+FROM enrollment
+WHERE TO_CHAR(enroll_date, 'HH:MIAM') LIKE '%10:19%'
+ORDER BY student_id;

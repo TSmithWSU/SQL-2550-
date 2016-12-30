@@ -1,0 +1,551 @@
+CREATE TABLE ALBUM
+(Albumid Number(8) NOT NULL,
+Title VARCHAR2(160) NOT NULL,
+ArtistId Number(8) NOT NULL
+);
+
+Alter Table ALBUM
+ADD CONSTRAINT ALBUM_PK PRIMARY KEY (Albumid);
+
+Create TABLE ARTIST
+(ArtistID Number(8) NOT NULL,
+Name VarChar2(120)
+);
+
+Alter Table Artist
+Add CONSTRAINT Artist_PK Primary KEY (ArtistID);
+
+ALTER TABLE ALBUM
+ADD CONSTRAINT FK_ALBUM_ArtistID Foreign Key (ArtistId) REFERENCES ARTIST(ArtistId);
+
+Create Table Genre
+(GenreID Number(8) NOT NULL,
+Name VarChar(120));
+
+Alter Table Genre
+Add Constraint Genre_PK Primary Key (GenreID);
+
+Create Table MediaType
+(MediaTypeID Number(8) NOT NULL,
+Name VarChar(120));
+
+Alter Table MediaType
+Add Constraint MediaType_PK Primary Key (MediaTypeID);
+
+Create Table Track
+(TrackID Number(8) NOT NULL,
+Name VarChar2(200) NOT NULL,
+Albumid Number(8),
+MediaTypeID Number(8) NOT NULL,
+GenreID Number(8) NOT NULL,
+Composer VarChar2(220),
+Milliseconds Number(35) NOT NULL,
+Bytes Number(35),
+UnitPrice Number(10,2) NOT NULL);
+
+Alter Table Track
+ADD Constraint Track_PK Primary KEY (TrackID);
+
+ALTER TABLE Track
+ADD CONSTRAINT FK_Track_AlbumID Foreign Key (AlbumID) REFERENCES Album(AlbumId);
+
+ALTER TABLE Track
+ADD CONSTRAINT FK_Track_MediaTypeID Foreign Key (MediaTypeID) REFERENCES MediaType(MediaTypeID);
+
+ALTER TABLE Track
+ADD CONSTRAINT FK_Track_GenreID Foreign Key (GenreID) REFERENCES Genre(GenreId);
+
+INSERT INTO Genre
+(GenreID, Name)
+Values
+('1', 'Rock');
+
+INSERT INTO Genre
+(GenreID, Name)
+Values
+('2', 'Jazz');
+
+INSERT INTO Genre
+(GenreID, Name)
+Values
+('3', 'Metal');
+
+INSERT INTO Genre
+(GenreID, Name)
+Values
+('4', 'Alternative '||chr(38)||' Punk');
+
+INSERT INTO Genre
+(GenreID, Name)
+Values
+('5', 'Rock And Roll');
+
+INSERT INTO Genre
+(GenreID, Name)
+Values
+('6', 'Blues');
+
+INSERT INTO Genre
+(GenreID, Name)
+Values
+('7', 'Latin');
+
+INSERT INTO Genre
+(GenreID, Name)
+Values
+('8', 'Reggae');
+
+INSERT INTO Genre
+(GenreID, Name)
+Values
+('9', 'Pop');
+
+INSERT INTO Genre
+(GenreID, Name)
+Values
+('10', 'Soundtrack');
+
+INSERT INTO Genre
+(GenreID, Name)
+Values
+('11', 'Bossa Noval');
+
+INSERT INTO Genre
+(GenreID, Name)
+Values
+('12', 'Easy Listening');
+
+INSERT INTO Genre
+(GenreID, Name)
+Values
+('13', 'Heavy Metal');
+
+INSERT INTO Genre
+(GenreID, Name)
+Values
+('14', 'R'||chr(38)||'B'||chr(47)||'Soul');
+
+INSERT INTO Genre
+(GenreID, Name)
+Values
+('15', 'Electronica'||chr(47)||'Dance');
+
+INSERT INTO Genre
+(GenreID, Name)
+Values
+('16', 'World');
+
+INSERT INTO Genre
+(GenreID, Name)
+Values
+('17', 'Hip Hop'||chr(47)||'Rap');
+
+INSERT INTO Genre
+(GenreID, Name)
+Values
+('18', 'Science Fiction');
+
+INSERT INTO Genre
+(GenreID, Name)
+Values
+('19', 'TV Shows');
+
+INSERT INTO Genre
+(GenreID, Name)
+Values
+('20', 'Sci Fi '||chr(38)||' Fantasy');
+
+INSERT INTO Genre
+(GenreID, Name)
+Values
+('21', 'Drama');
+
+INSERT INTO Genre
+(GenreID, Name)
+Values
+('22', 'Comedy');
+
+INSERT INTO Genre
+(GenreID, Name)
+Values
+('23', 'Alternative');
+
+INSERT INTO Genre
+(GenreID, Name)
+Values
+('24', 'Classical');
+
+INSERT INTO Genre
+(GenreID, Name)
+Values
+('25', 'Opera');
+
+INSERT INTO mediatype
+(mediatypeid, Name)
+Values
+('1', 'MPEG audio file');
+
+INSERT INTO mediatype
+(mediatypeid, Name)
+Values
+('2', 'Protected AAC audio file');
+
+INSERT INTO mediatype
+(mediatypeid, Name)
+Values
+('3', 'Protected MPEG-4 video file');
+
+INSERT INTO mediatype
+(mediatypeid, Name)
+Values
+('4', 'Purchased AAC audio file');
+
+INSERT INTO mediatype
+(mediatypeid, Name)
+Values
+('5', 'AAC audio file');
+
+INSERT INTO artist
+(artistid, Name)
+Values
+('1', 'AC'||chr(47)||'DC');
+
+INSERT INTO artist
+(artistid, Name)
+Values
+('2', 'Accept');
+
+INSERT INTO artist
+(artistid, Name)
+Values
+('3', 'Aerosmith');
+
+INSERT INTO artist
+(artistid, Name)
+Values
+('4', 'Alanis Morissette');
+
+INSERT INTO artist
+(artistid, Name)
+Values
+('5', 'Alice In Chains');
+
+INSERT INTO artist
+(artistid, Name)
+Values
+('6', 'Antonio Carlos Jobim');
+
+INSERT INTO artist
+(artistid, Name)
+Values
+('7', 'Apocalyptica');
+
+INSERT INTO artist
+(artistid, Name)
+Values
+('8', 'Audioslave');
+
+INSERT INTO artist
+(artistid, Name)
+Values
+('9', 'BackBeat');
+
+INSERT INTO artist
+(artistid, Name)
+Values
+('10', 'Billy Cobham');
+
+INSERT INTO artist
+(artistid, Name)
+Values
+('11', 'Black label Society');
+
+INSERT INTO artist
+(artistid, Name)
+Values
+('12', 'Black Sabbath');
+
+INSERT INTO album
+(albumid, title, artistid)
+Values
+('1', 'For Those About To Rock We Salute You', '1');
+
+INSERT INTO album
+(albumid, title, artistid)
+Values
+('2', 'Balls to the Wall', '2');
+
+INSERT INTO album
+(albumid, title, artistid)
+Values
+('3', 'Restless and Wild', '2');
+
+INSERT INTO album
+(albumid, title, artistid)
+Values
+('4', 'Let There Be Rock', '1');
+
+INSERT INTO album
+(albumid, title, artistid)
+Values
+('5', 'Big Ones', '3');
+
+INSERT INTO album
+(albumid, title, artistid)
+Values
+('6', 'Jagged Little Pill', '4');
+
+INSERT INTO album
+(albumid, title, artistid)
+Values
+('7', 'Facelift', '5');
+
+INSERT INTO album
+(albumid, title, artistid)
+Values
+('8', 'Warner 25 Anos', '6');
+
+INSERT INTO album
+(albumid, title, artistid)
+Values
+('9', 'Plays Metallica By Four Cellos', '7');
+
+INSERT INTO album
+(albumid, title, artistid)
+Values
+('10', 'Audioslave', '8');
+
+INSERT INTO album
+(albumid, title, artistid)
+Values
+('11', 'Out Of Exile', '8');
+
+INSERT INTO album
+(albumid, title, artistid)
+Values
+('12', 'BackBeat Soundtrack', '9');
+
+INSERT INTO album
+(albumid, title, artistid)
+Values
+('13', 'The Best Of Billy Cobham', '10');
+
+INSERT INTO album
+(albumid, title, artistid)
+Values
+('14', 'Alcohol Fueled Brewtality Live! [Disc 1]', '11');
+
+INSERT INTO album
+(albumid, title, artistid)
+Values
+('15', 'Alcohol Fueled Brewtality Live! [Disc 2]', '11');
+
+INSERT INTO album
+(albumid, title, artistid)
+Values
+('16', 'Black Sabbath', '12');
+
+INSERT INTO album
+(albumid, title, artistid)
+Values
+('17', 'Black Sabbath Vol. 4 (Remaster)', '12');
+
+INSERT INTO album
+(albumid, title, artistid)
+Values
+('34', 'Chill: Brazil (Disc 2)', '6');
+
+INSERT INTO album
+(albumid, title, artistid)
+Values
+('271', 'Revelations', '8');
+
+INSERT INTO track
+(trackid, name, albumid, mediatypeid, genreid, composer, milliseconds, bytes, unitprice)
+Values
+('1', 'For Those About To Rock (We Salute You)', '1', '1', '1', 'Angus Young, Malcolm Young, Brian Johnson', '343719', '11170334', '.99' );
+
+INSERT INTO track
+(trackid, name, albumid, mediatypeid, genreid, composer, milliseconds, bytes, unitprice)
+Values
+('6', 'Put The Finger On You', '1', '1', '1', 'Angus Young, Malcolm Young, Brian Johnson', '205662', '6713451', '.99' );
+
+INSERT INTO track
+(trackid, name, albumid, mediatypeid, genreid, milliseconds, bytes, unitprice)
+Values
+('2', ' Balls to the Wall', '2', '2', '1', '342562', '5510424', '.99' );
+
+INSERT INTO track
+(trackid, name, albumid, mediatypeid, genreid, composer, milliseconds, bytes, unitprice)
+Values
+('3', 'Fast As a Shark', '3', '2', '1', 'F. Baltes, S. Kaufman, U. Dirkscneider '||chr(38)||' W. Hoffman', '230619 ', '3990994', '.99' );
+
+INSERT INTO track
+(trackid, name, albumid, mediatypeid, genreid, composer, milliseconds, bytes, unitprice)
+Values
+('4', 'Restless and Wild', '3', '2', '1', 'F. Baltes, R.A. Smith-Diesel, S. Kaufman, U. Dirkscneider '||chr(38)||' W. Hoffman', '252051', '4331779', '.99' );
+
+INSERT INTO track
+(trackid, name, albumid, mediatypeid, genreid, composer, milliseconds, bytes, unitprice)
+Values
+('16', 'Dog Eat Dog', '4', '1', '1', 'AC'||chr(47)||'DC', '215196', '7032162', '.99' );
+
+INSERT INTO track
+(trackid, name, albumid, mediatypeid, genreid, composer, milliseconds, bytes, unitprice)
+Values
+('17', 'Let There Be Rock', '4', '1', '1', 'AC'||chr(47)||'DC', '366654', '12021261', '.99' );
+
+INSERT INTO track
+(trackid, name, albumid, mediatypeid, genreid, composer, milliseconds, bytes, unitprice)
+Values
+('23', 'Walk On Water', '5', '1', '1', 'Steven Tyler, Joe Perry, Jack Blades, Tommy Shaw', '295680', '9719579', '.99' );
+
+INSERT INTO track
+(trackid, name, albumid, mediatypeid, genreid, composer, milliseconds, bytes, unitprice)
+Values
+('24', 'Love In An Elevator', '5', '1', '1', 'Steven Tyler, Joe Perry', '321828', '10552051', '.99' );
+
+INSERT INTO track
+(trackid, name, albumid, mediatypeid, genreid, composer, milliseconds, bytes, unitprice)
+Values
+('38', 'All I Really Want', '6','1', '1', 'Alanis Morissette '||chr(38)||' Glenn Ballard', '284891', '9375567', '.99' );
+
+INSERT INTO track
+(trackid, name, albumid, mediatypeid, genreid, composer, milliseconds, bytes, unitprice)
+Values
+('39', 'You Oughta Know', '6','1', '1', 'Alanis Morissette '||chr(38)||' Glenn Ballard', '249234', '8196916', '.99' );
+
+INSERT INTO track
+(trackid, name, albumid, mediatypeid, genreid, composer, milliseconds, bytes, unitprice)
+Values
+('40', 'Perfect', '6','1', '1', 'Alanis Morissette '||chr(38)||' Glenn Ballard', '188133', '6145404', '.99' );
+
+INSERT INTO track
+(trackid, name, albumid, mediatypeid, genreid, composer, milliseconds, bytes, unitprice)
+Values
+('51', 'We Die Young', '7','1', '1', 'Jerry Cantrell', '152084', '4925362', '.99' );
+
+INSERT INTO track
+(trackid, name, albumid, mediatypeid, genreid, composer, milliseconds, bytes, unitprice)
+Values
+('52', 'Man In The Box', '7','1', '1', 'Jerry Cantrell, Layne Staley', '286641', '9310272', '.99' );
+
+INSERT INTO track
+(trackid, name, albumid, mediatypeid, genreid, milliseconds, bytes, unitprice)
+Values
+('63', 'Desafinado', '8','1', '2', '185338', '5990473', '.99' );
+
+INSERT INTO track
+(trackid, name, albumid, mediatypeid, genreid, milliseconds, bytes, unitprice)
+Values
+('64', 'Garota De Ipanema', '8','1', '2', '285048', '9348428', '.99' );
+
+INSERT INTO track
+(trackid, name, albumid, mediatypeid, genreid, composer, milliseconds, bytes, unitprice)
+Values
+('77', 'Enter Sandman', '9','1', '3', 'Apocalyptica', '221701', '7286305', '.99' );
+
+INSERT INTO track
+(trackid, name, albumid, mediatypeid, genreid, composer, milliseconds, bytes, unitprice)
+Values
+('78', 'Master Of Puppets', '9','1', '3', 'Apocalyptica', '436453', '14375310', '.99' );
+
+INSERT INTO track
+(trackid, name, albumid, mediatypeid, genreid, composer, milliseconds, bytes, unitprice)
+Values
+('85', 'Cochise', '10','1', '1', 'Audioslave'||chr(47)||'Chris Cornell', '222380', '5339931', '.99' );
+
+INSERT INTO track
+(trackid, name, albumid, mediatypeid, genreid, composer, milliseconds, bytes, unitprice)
+Values
+('86', 'Show Me How to Live', '10','1', '1', 'Audioslave'||chr(47)||'Chris Cornell', '277890', '667217', '.99' );
+
+INSERT INTO track
+(trackid, name, albumid, mediatypeid, genreid, composer, milliseconds, bytes, unitprice)
+Values
+('99', 'Your Time Has Come', '11','1', '4', 'Cornell, Commerford, Morello, Wilk', '255529', '8273592', '.99' );
+
+INSERT INTO track
+(trackid, name, albumid, mediatypeid, genreid, composer, milliseconds, bytes, unitprice)
+Values
+('100', 'Out Of Exile', '11','1', '4', 'Cornell, Commerford, Morello, Wilk', '291291', '9506571', '.99' );
+
+INSERT INTO track
+(trackid, name, albumid, mediatypeid, genreid, composer, milliseconds, bytes, unitprice)
+Values
+('111', 'Money', '12','1', '5', 'Berry Gordy, Jr.'||chr(47)||'Janie Bradford', '147591', '2365897', '.99' );
+
+INSERT INTO track
+(trackid, name, albumid, mediatypeid, genreid, composer, milliseconds, bytes, unitprice)
+Values
+('112', 'Long Tall Sally', '12','1', '5', 'Enotris Johnson'||chr(47)||'Little Richard/Robert '||chr(34)||'Bumps'||chr(34)||' Blackwell', '106396', '1707084', '.99' );
+
+INSERT INTO track
+(trackid, name, albumid, mediatypeid, genreid, composer, milliseconds, bytes, unitprice)
+Values
+('123', 'Quadrant', '13','1', '2', 'Billy Cobham', '261851', '8538199', '.99' );
+
+INSERT INTO track
+(trackid, name, albumid, mediatypeid, genreid, composer, milliseconds, bytes, unitprice)
+Values
+('124', 'Snoopy'||chr(39)||'s search-Red baront', '13','1', '2', 'Billy Cobham', '456071', '15075616', '.99' );
+
+INSERT INTO track
+(trackid, name, albumid, mediatypeid, genreid, milliseconds, bytes, unitprice)
+Values
+('131', 'Intro'||chr(47)||' Low Down', '14','1', '3', '323683', '10642901', '.99' );
+
+INSERT INTO track
+(trackid, name, albumid, mediatypeid, genreid, milliseconds, bytes, unitprice)
+Values
+('132', '13 Years Of Grief', '14','1', '3', '246987', '8137421', '.99' );
+
+INSERT INTO track
+(trackid, name, albumid, mediatypeid, genreid, milliseconds, bytes, unitprice)
+Values
+('144', 'Heart Of Gold', '15','1', '3', '194873', '6417460', '.99' );
+
+INSERT INTO track
+(trackid, name, albumid, mediatypeid, genreid, milliseconds, bytes, unitprice)
+Values
+('145', 'Snowblind', '15','1', '3', '420022', '13842549', '.99' );
+
+INSERT INTO track
+(trackid, name, albumid, mediatypeid, genreid, milliseconds, bytes, unitprice)
+Values
+('149', 'Black Sabbath', '16','1', '3', '382066', '12440200', '.99' );
+
+INSERT INTO track
+(trackid, name, albumid, mediatypeid, genreid, milliseconds, bytes, unitprice)
+Values
+('150', 'The Wizard', '16','1', '3', '264829', '8646737', '.99' );
+
+INSERT INTO track
+(trackid, name, albumid, mediatypeid, genreid, composer, milliseconds, bytes, unitprice)
+Values
+('156', ' Wheels Of Confusion '||chr(47)||' The Straightener', '17','1', '3', 'Tony Iommi, Bill Ward, Geezer Butler, Ozzy Osbourne', '494524', '16065830', '.99' );
+
+INSERT INTO track
+(trackid, name, albumid, mediatypeid, genreid, composer, milliseconds, bytes, unitprice)
+Values
+('157', 'Tomorrow'||chr(39)||'s Dream', '17','1', '3', 'Tony Iommi, Bill Ward, Geezer Butler, Ozzy Osbourne', '192496', '6252071', '.99' );
+
+INSERT INTO track
+(trackid, name, albumid, mediatypeid, genreid, composer, milliseconds, bytes, unitprice)
+Values
+('403', 'Bumbo Da Mangueira', '34','1', '7', 'Various', '270158', '9073350', '.99' );
+
+INSERT INTO track
+(trackid, name, albumid, mediatypeid, genreid, composer, milliseconds, bytes, unitprice)
+Values
+('404', 'Mr Funk Samba', '34','1', '7', 'Various', '213890', '7102545', '.99' );
+
+INSERT INTO track
+(trackid, name, albumid, mediatypeid, genreid, milliseconds, bytes, unitprice)
+Values
+('3389', 'Revelations', '271','2', '23', '252376', '4111051', '.99' );
+
+INSERT INTO track
+(trackid, name, albumid, mediatypeid, genreid, milliseconds, bytes, unitprice)
+Values
+('3390', 'One and the Same', '271','2', '23', '217732', '3559040', '.99' );
