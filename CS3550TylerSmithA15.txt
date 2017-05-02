@@ -1,0 +1,15 @@
+db.territoryCOUNT.aggregate([
+{
+    $group:{ _id:{territory:"$territory", territoryID:"$territoryID" },
+    count:{$sum:1}
+    }
+}
+]);
+
+db.territoryCOUNT.mapReduce(
+function(){emit(this.territory + "-"+ this.territoryID,1);},
+function(key,values){return Array.sum(values);},
+{query:{},
+out:{inline:1}
+}
+).find();
